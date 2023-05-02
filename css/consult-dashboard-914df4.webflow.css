@@ -182,6 +182,38 @@ body {
   color: #fff;
 }
 
+.tabs-menu {
+  margin-left: auto;
+  display: inline-block;
+}
+
+.tabbasic {
+  background-color: #ed6d41;
+  border-radius: 0 15px 15px;
+}
+
+.tabbasic.w--current {
+  background-color: #f29576;
+}
+
+.tabbasic.graphs {
+  color: #fff;
+  background-color: #40c2ed;
+  font-weight: 700;
+}
+
+.tabbasic.graphs.w--current {
+  background-color: #8ed4eb;
+}
+
+.container-2 {
+  clear: left;
+  justify-content: space-between;
+  align-items: stretch;
+  display: flex;
+  position: relative;
+}
+
 .utility-page-form {
   flex-direction: column;
   align-items: stretch;
@@ -201,8 +233,52 @@ body {
   display: flex;
 }
 
+.tabs {
+  position: relative;
+}
+
+.button {
+  background-color: red;
+  border-radius: 15px;
+}
+
 .submit-button {
   margin-top: 9px;
+}
+
+.image-3 {
+  flex: 0 auto;
+}
+
+.text-block-14, .text-block-15 {
+  color: #fff;
+  font-weight: 700;
+}
+
+.column-3 {
+  flex-wrap: nowrap;
+  align-content: space-around;
+  justify-content: center;
+  align-items: center;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 10px;
+  display: flex;
+  position: relative;
+  top: 0%;
+  bottom: 0%;
+  left: 0%;
+  right: 0%;
+}
+
+.text-field-2 {
+  max-height: 600px;
+  max-width: 500px;
+  min-height: 100px;
+  min-width: 100px;
+  position: relative;
+  top: 0;
+  left: 0;
 }
 
 @media screen and (max-width: 991px) {
@@ -628,6 +704,37 @@ body {
   .paragraph-5, .paragraph-6, .paragraph-7 {
     color: #000;
   }
+
+  .heading-7 {
+    float: left;
+    -webkit-text-stroke-color: #000;
+  }
+
+  .text-span {
+    color: #000;
+    text-align: left;
+  }
+
+  .text-field-2 {
+    height: auto;
+    min-height: 100px;
+    min-width: 100px;
+    float: left;
+    clear: left;
+    margin-top: 10px;
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+  }
+
+  .consult-submit {
+    float: left;
+    clear: right;
+    margin-left: 40%;
+    font-weight: 700;
+    display: inline-block;
+  }
 }
 
 @media screen and (max-width: 767px) {
@@ -646,6 +753,12 @@ body {
   .button-2 {
     margin-top: 30px;
   }
+
+  .text-field-2 {
+    max-height: 400px;
+    max-width: 400px;
+    left: 109px;
+  }
 }
 
 @media screen and (max-width: 479px) {
@@ -655,6 +768,11 @@ body {
 
   .centered-heading {
     margin-bottom: 24px;
+  }
+
+  .text-field-2 {
+    width: auto;
+    min-width: 100px;
   }
 }
 
@@ -767,7 +885,7 @@ body {
     grid-area: Title;
   }
 
-  #w-node-_686914a0-5a0f-d875-2197-abb1a7314804-ea4d4c29 {
+  #feedback-data-from-db.w-node-_686914a0-5a0f-d875-2197-abb1a7314804-ea4d4c29 {
     grid-area: Info-from-DB;
   }
 }
