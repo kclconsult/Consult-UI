@@ -144,41 +144,61 @@
         </div>
         <div id="mood" data-w-tab="tabMood" class="w-tab-pane w--tab-active">
           <div id="phq2-form" class="w-container">
-            <div id="phq2-form-block" class="w-form">
+            <div id="phq2-form-block" class="form">
               <form id="wf-form-phq2-form-block" name="wf-form-phq2-form-block" data-name="phq2-form-block" method="get">
                 <h3 class="heading-3">PHQ2 Form</h3>
                 <div id="phq-q1" class="phq2-question">
                   <h5 class="heading-5">Question 1</h5>
-                  <p class="paragraph-3">During the last month, have you often been bothered by feeling down, depressed or hopeless?</p><label class="radio-button-field w-radio"><input type="radio" id="Yes" name="phq2-q1" value="Yes" data-name="phq2-q1" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="Yes">Yes</span></label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" id="No" name="phq2-q1" value="No" data-name="phq2-q1" required="" style="opacity:0;position:absolute;z-index:-1"><span class="radio-button-label w-form-label" for="No">No</span>
+                  <p class="paragraph-3">During the last month, have you often been bothered by feeling down, depressed or hopeless?</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q1-Yes" name="phq2-q1" value="Yes" data-name="phq2-q1" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="Yes">Yes</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q1-No" name="phq2-q1" value="No" data-name="phq2-q1" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="No">No</span>
                   </label>
                 </div>
                 <div id="phq-q2" class="phq2-question">
                   <h5 class="heading-5">Question 2</h5>
-                  <p class="paragraph-3">During the last month, have you often been bothered by having little interest or pleasure in doing things?</p><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" id="Yes-2" name="phq-q2" value="Yes" data-name="phq-q2" required="" style="opacity:0;position:absolute;z-index:-1"><span class="radio-button-label w-form-label" for="Yes-2">Yes</span>
-                  </label><label class="radio-button-field w-radio">
-                    <div class="w-form-formradioinput w-form-formradioinput--inputType-custom w-radio-input"></div><input type="radio" id="No-2" name="phq-q2" value="No" data-name="phq-q2" required="" style="opacity:0;position:absolute;z-index:-1"><span class="radio-button-label w-form-label" for="No-2">No</span>
+                  <p class="paragraph-3">During the last month, have you often been bothered by having little interest or pleasure in doing things?</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q2-Yes" name="phq-q2" value="Yes" data-name="phq-q2" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="Yes-2">Yes</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q2-No" name="phq-q2" value="No" data-name="phq-q2" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="No-2">No</span>
                   </label>
                 </div>
+                <!-- <label><input id="submit-phq2-form" type="submit">Submit</label> -->
+                <a id="submit-phq2-form" href="#" class="consult-submit w-button" onclick="submitFormPHQ2()">Submit</a> <!--Submit form to database (?), activate either PHQ9 or Picture Grid-->
               </form>
-              <div id="phq2-form-block-suc" class="success-message w-form-done">
-                <div class="text-block-12">Answer to PHQ-2 Form is submitted.</div>
-                <a href="#mood-grid" class="button-2 w-button">Confirm</a>
-              </div>
-              <div id="phq2-form-block-fail" class="w-form-fail">
-                <div class="text-block-11">You need to answer all the questions in this form.</div>
-              </div>
-            </div>
-            <a id="submit-phq2-form" href="#" class="consult-submit w-button">Submit</a>
+            </div>  
           </div>
           <div id="phq2-form" class="w-container">
-            <div id="phq2-form-block" class="w-form">
+            <div id="phq2-form-block" class="form">
               <form id="wf-form-phq9-form-block" name="wf-form-phq9-form-block" data-name="phq9-form-block" method="get">
                 <h3 class="heading-3">Patient Health Questionnaire (PHQ-9)</h3>
                 <h5 class="heading-5">Over the last <em>2 weeks</em>, how ofter have you been bothered by any of the following problems?</h5>
                 <div id="phq9-q1" class="phq9-question">
-                  <p class="paragraph-3"><strong>1. </strong>Little interest or pleasure in doing things</p><label class="radio-button-field w-radio"><input type="radio" id="0" name="phq9-q1" value="0" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="0">Not at all</span></label><label class="radio-button-field w-radio"><input type="radio" id="1" name="phq9-q1" value="1" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="1">Several days</span></label><label class="radio-button-field w-radio"><input type="radio" id="2" name="phq9-q1" value="2" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="2">More than half the days</span></label><label class="radio-button-field w-radio"><input type="radio" id="3" name="phq9-q1" value="3" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="3">Nearly every day</span></label>
+                  <p class="paragraph-3"><strong>1. </strong>Little interest or pleasure in doing things</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="0" name="phq9-q1" value="0" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="1" name="phq9-q1" value="1" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="2" name="phq9-q1" value="2" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="3" name="phq9-q1" value="3" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
                 </div>
                 <div id="phq9-q1" class="phq9-question">
                   <p class="paragraph-3"><strong>2. </strong>Feeling down, depressed, or hopeless</p><label class="radio-button-field w-radio"><input type="radio" id="0" name="phq9-q2" value="0" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="0">Not at all</span></label><label class="radio-button-field w-radio"><input type="radio" id="1" name="phq9-q2" value="1" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="1">Several days</span></label><label class="radio-button-field w-radio"><input type="radio" id="2" name="phq9-q2" value="2" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="2">More than half the days</span></label><label class="radio-button-field w-radio"><input type="radio" id="3" name="phq9-q2" value="3" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="3">Nearly every day</span></label>
@@ -207,16 +227,17 @@
                 <div id="phq9-q1" class="phq9-question">
                   <p class="paragraph-3"><strong>10.</strong> If you checked off <em>any problems</em>, how <em>difficult</em> have these problems made it for you to do your work, take care of things at home, or get along with other people?</p><label class="radio-button-field w-radio"><input type="radio" id="0" name="phq9-q10" value="0" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="0">Not difficult at all</span></label><label class="radio-button-field w-radio"><input type="radio" id="1" name="phq9-q10" value="1" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="1">Somewhat difficult</span></label><label class="radio-button-field w-radio"><input type="radio" id="2" name="phq9-q10" value="2" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="2">Very difficult</span></label><label class="radio-button-field w-radio"><input type="radio" id="3" name="phq9-q10" value="3" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input"><span class="radio-button-label w-form-label" for="3">Extremely difficult</span></label>
                 </div>
+                <a id="submitt-phq9-form" href="#" class="consult-submit w-button">Submit</a>
+                <!-- Button NEED SUBMIT FUNCTION -->
               </form>
-              <div id="phq2-form-block-suc" class="success-message w-form-done">
+              <!-- <div id="phq2-form-block-suc" class="success-message w-form-done">
                 <div class="text-block-12">Answers to PHQ-9 Form is submitted.</div>
                 <a href="#mood-grid" class="button-2 w-button">Confirm</a>
               </div>
               <div id="phq2-form-block-fail" class="w-form-fail">
                 <div class="text-block-11">You need to answer all the questions in this form.</div>
-              </div>
+              </div> -->
             </div>
-            <a id="submitt-phq9-form" href="#" class="consult-submit w-button">Submit</a>
           </div>
           <div id="mood-grid" class="w-container">
             <h1 class="heading-3">Which image best represents your current MOOD?</h1>
@@ -311,8 +332,8 @@
                   <div>Oops! Something went wrong while submitting the form.</div>
                 </div> -->
                 <!-- Submit Feedbaacks. -->
-                <a href="#" class="consult-submit w-button" onclick="callAPISubmitFeedback(document.getElementById('feedback-input').value,'username')">Submit</a>
-                <a href="#" class="consult-submit w-button" onclick="callAPI(document.getElementById('feedback-input').value,'username')">Submit</a>
+                <a href="#" class="consult-submit w-button" onclick="callAPISubmitFeedback(document.getElementById('feedback-input').value,'USERNAME')">Submit</a>
+                <!-- <a href="#" class="consult-submit w-button" onclick="callAPI(document.getElementById('feedback-input').value,'USERNAME')">Submit</a> -->
                 <!-- <button type="button" onclick="callAPI(document.getElementById('feedback-input').value,document.getElementById('feedback-input').value)">Submit</button> -->
               </div>
             </div>
