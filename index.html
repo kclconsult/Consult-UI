@@ -26,9 +26,9 @@
     </div>
   </div>
   <div class="section wf-section">
-    <div data-current="tabMood" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
+    <div data-current="tabSummary" data-easing="ease" data-duration-in="300" data-duration-out="100" class="tabs w-tabs">
       <div class="tabs-menu w-tab-menu">
-        <a data-w-tab="tabSummary" class="tabbasic w-inline-block w-tab-link">
+        <a data-w-tab="tabSummary" class="tabbasic w-inline-block w-tab-link w--current">
           <div class="text-block">Summary</div>
         </a>
         <a data-w-tab="tabBP" class="tabbasic w-inline-block w-tab-link"><img width="20" loading="lazy" src="images/bloodpressure.png" alt="">
@@ -40,7 +40,7 @@
         <a data-w-tab="tabECG" class="tabbasic w-inline-block w-tab-link"><img width="20" loading="lazy" src="images/ecg.png" alt="">
           <div class="text-block">ECG</div>
         </a>
-        <a data-w-tab="tabMood" class="tabbasic w-inline-block w-tab-link w--current"><img width="20" loading="lazy" src="images/mood-good.png" alt="">
+        <a data-w-tab="tabMood" class="tabbasic w-inline-block w-tab-link"><img width="20" loading="lazy" src="images/mood-good.png" alt="">
           <div class="text-block">Mood</div>
         </a>
         <a data-w-tab="tabRisk" class="tabbasic w-inline-block w-tab-link">
@@ -54,7 +54,7 @@
         </a>
       </div>
       <div class="tabs-content w-tab-content">
-        <div id="tab-summary" data-w-tab="tabSummary" class="tab-pane-tabsummary w-tab-pane">
+        <div id="tab-summary" data-w-tab="tabSummary" class="w-tab-pane w--tab-active">
           <div class="container">
             <div id="w-node-_8232800f-8092-b2c5-1577-5e9e6e063a87-ea4d4c29" class="w-layout-grid summary-grid">
               <div id="w-node-cea43a19-7df9-9438-e9d8-9ed062c5b605-ea4d4c29" class="div-block-5">
@@ -142,7 +142,7 @@
         <div data-w-tab="tabECG" class="w-tab-pane">
           <div class="text-block-13">Plot ECG here.</div>
         </div>
-        <div id="mood" data-w-tab="tabMood" class="w-tab-pane w--tab-active">
+        <div id="mood" data-w-tab="tabMood" class="w-tab-pane">
           <div id="phq2-form" class="w-container">
             <div id="phq2-form-block" class="form">
               <form id="wf-form-phq2-form-block" name="wf-form-phq2-form-block" data-name="phq2-form-block" method="get">
