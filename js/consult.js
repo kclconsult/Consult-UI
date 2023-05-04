@@ -1,32 +1,68 @@
 var callAPISubmitFeedback = (feedbackInput,userName)=>{
-    if (userName.length==0){
-        userName = "TempUserName";
+    if (feedbackInput.length>0){
+        if (userName.length==0){
+            userName = "TempUserName";
+        }
+        // Get current date and time
+        var today = new Date();
+        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
+        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+        var dateTime = date+' '+time;
+        // instantiate a headers object
+        var myHeaders = new Headers();
+        // add content type header to object
+        myHeaders.append("Content-Type", "application/json");
+        // using built in JSON utility package turn object to string and store in a variable
+        var raw = JSON.stringify({"time":dateTime, "userName":userName,"feedbackInput":feedbackInput});
+        // create a JSON object with parameters for API call and store in a variable
+        var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: raw,
+            redirect: 'follow'
+        };
+        // make API call with parameters and use promises to get response
+        fetch("https://trtbhfsrkl.execute-api.eu-west-2.amazonaws.com/dev", requestOptions) 
+        .then(response => response.text())
+        .then(result => alert(JSON.parse(result).body))
+        .catch(error => console.log('error', error));
     }
-    // Get current date and time
-    var today = new Date();
-    var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-    var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-    var dateTime = date+' '+time;
-    // instantiate a headers object
+    else{
+        alert("Feedback or note must be filled out before submitting");
+        // return false;
+    }
+}
+
+
+
+var callAPIGetFeedbackText = (userName)=>{
+    // add content type header to object
     var myHeaders = new Headers();
     // add content type header to object
     myHeaders.append("Content-Type", "application/json");
-    // using built in JSON utility package turn object to string and store in a variable
-    var raw = JSON.stringify({"time":dateTime, "userName":userName,"feedbackInput":feedbackInput});
     // create a JSON object with parameters for API call and store in a variable
     var requestOptions = {
-        method: 'POST',
         headers: myHeaders,
-        body: raw,
-        redirect: 'follow'
+        method: 'GET',
+        // queryStringParameters: userName
     };
+    // API + quary params
+    var APIlink = "https://hlufzfqexd.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName; //TODO: This is not solved yet -- how to pass the username to API
     // make API call with parameters and use promises to get response
-    fetch("https://trtbhfsrkl.execute-api.eu-west-2.amazonaws.com/dev", requestOptions) //TODO: to changed the API
-    .then(response => response.text())
-    .then(result => alert(JSON.parse(result).body))
-    .catch(error => console.log('error', error));
-}
+    fetch(APIlink, requestOptions)
+    .then(response => {return response.json()})
+    .then((result) => { alert("Getting feedbacks from Database.");
+        let text = "";
+        for (let i = 0; i < result.body.length; i++) {
+            text += JSON.stringify(result.body[i].Time) + ": " + JSON.stringify(result.body[i].Feedback) + "<br>";
+        }
+        document.getElementById("feedback-data-from-db").innerHTML = text;
+    // document.getElementById("updatableNamelist").innerText = JSON.stringify(result.body);
+    })
+    .catch((error) => console.log("error:", error));
 
+    // Need to change format of output, line by line.
+}
 
 // https://html.form.guide/action/html-form-action-javascript-example/
 // Submit data EXAMPLE, for test. FEEL FREE TO DELETE
@@ -57,5 +93,5 @@ function submitFormPHQ2(e) {
       });
 }
   
-var phq2FormSubmit = document.getElementById("submit-phq2-form");
-phq2FormSubmit.addEventListener("submit", submitFormPHQ2);
+// var phq2FormSubmit = document.getElementById("submit-phq2-form");
+// phq2FormSubmit.addEventListener("submit", submitFormPHQ2);
