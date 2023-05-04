@@ -318,6 +318,7 @@
             <div class="column-2 w-col w-col-5">
               <p id="w-node-d84dbacf-82f9-62cc-50f1-cfa4497bba11-ea4d4c29" class="paragraph">Feedbacks submitted:</p>
               <p id="feedback-data-from-db" class="paragraph-2 w-node-_686914a0-5a0f-d875-2197-abb1a7314804-ea4d4c29">(ADD FEEDBACKS FROM DB)</p>
+              <a id="feedback-data-from-db-get-button" href="#" class="button-3 w-button" onclick="callAPIGetFeedbackText('USERNAME')">Load Previous<br>Feedbacks</a>
             </div>
             <div class="w-col w-col-7">
               <h5 class="heading-7"><span class="text-span">Feedback:</span></h5>
@@ -325,16 +326,7 @@
                 <form id="feedback-form" name="feedback-form" data-name="Feedbacks">
                   <input type="text" class="text-field-2 w-input" maxlength="256" name="feedback-input" data-name="feedback-input" placeholder="Enter your feedbacks and notes here." id="feedback-input" required="">
                 </form>
-                <!-- <div class="w-form-done">
-                  <div>Thank you! Your feedback has been received!</div>
-                </div>
-                <div class="w-form-fail">
-                  <div>Oops! Something went wrong while submitting the form.</div>
-                </div> -->
-                <!-- Submit Feedbaacks. -->
                 <a href="#" class="consult-submit w-button" onclick="callAPISubmitFeedback(document.getElementById('feedback-input').value,'USERNAME')">Submit</a>
-                <!-- <a href="#" class="consult-submit w-button" onclick="callAPI(document.getElementById('feedback-input').value,'USERNAME')">Submit</a> -->
-                <!-- <button type="button" onclick="callAPI(document.getElementById('feedback-input').value,document.getElementById('feedback-input').value)">Submit</button> -->
               </div>
             </div>
           </div>
