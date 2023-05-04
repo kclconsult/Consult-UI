@@ -53,6 +53,7 @@ body {
   font-size: 20px;
   font-weight: 700;
   text-decoration: none;
+  display: inline-block;
 }
 
 .tab-link-summary {
@@ -93,6 +94,8 @@ body {
   grid-auto-columns: 1fr;
   margin-left: auto;
   margin-right: auto;
+  padding-top: 20px;
+  padding-bottom: 20px;
   display: grid;
 }
 
@@ -145,7 +148,8 @@ body {
 .summary-grid {
   grid-column-gap: 0px;
   grid-row-gap: 0px;
-  background-color: #6d6d6d;
+  background-color: #ed6d41;
+  border-radius: 10px;
   grid-template: "Area Area-2" .5fr
                  "Area-4 Area-2" 1fr
                  / 1fr .5fr;
@@ -190,6 +194,8 @@ body {
 .tabbasic {
   background-color: #ed6d41;
   border-radius: 0 15px 15px;
+  padding-left: 15px;
+  padding-right: 15px;
 }
 
 .tabbasic.w--current {
@@ -234,6 +240,7 @@ body {
 }
 
 .tabs {
+  margin-left: auto;
   position: relative;
 }
 
@@ -598,6 +605,7 @@ body {
   }
 
   .paragraph-2 {
+    min-height: 100px;
     color: #000;
   }
 
@@ -722,6 +730,7 @@ body {
     float: left;
     clear: left;
     margin-top: 10px;
+    display: block;
     position: relative;
     top: 0;
     bottom: 0;
@@ -731,9 +740,17 @@ body {
   .consult-submit {
     float: left;
     clear: right;
-    margin-left: 40%;
+    margin-left: auto;
+    margin-right: auto;
     font-weight: 700;
     display: inline-block;
+  }
+
+  .button-3 {
+    text-align: center;
+    font-weight: 700;
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
@@ -887,5 +904,10 @@ body {
 
   #feedback-data-from-db.w-node-_686914a0-5a0f-d875-2197-abb1a7314804-ea4d4c29 {
     grid-area: Info-from-DB;
+  }
+
+  #w-node-_24dfa792-f61c-62f4-495f-023cd7e9048e-ea4d4c29 {
+    align-self: center;
+    justify-self: center;
   }
 }
