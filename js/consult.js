@@ -51,17 +51,17 @@ var callAPIGetFeedbackText = (userName)=>{
     // make API call with parameters and use promises to get response
     fetch(APIlink, requestOptions)
     .then(response => {return response.json()})
-    .then((result) => { alert("Getting feedbacks from Database.");
-        let text = "";
-        for (let i = 0; i < result.body.length; i++) {
-            text += JSON.stringify(result.body[i].Time) + ": " + JSON.stringify(result.body[i].Feedback) + "<br>";
-        }
-        document.getElementById("feedback-data-from-db").innerHTML = text;
-    // document.getElementById("updatableNamelist").innerText = JSON.stringify(result.body);
+    .then(data => {console.log(data);
+      alert(JSON.stringify(data));
+      let text = "";
+      for (let i = 0; i < data.length; i++) {
+        text += JSON.stringify(data[i].Time) + ": " + JSON.stringify(data[i].Feedback) + "<br>";
+      }
+      document.getElementById("feedback-data-from-db").innerHTML = text;
     })
     .catch((error) => console.log("error:", error));
-
     // Need to change format of output, line by line.
+    
 }
 
 // https://html.form.guide/action/html-form-action-javascript-example/
