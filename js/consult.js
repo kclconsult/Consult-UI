@@ -52,7 +52,7 @@ var callAPIGetFeedbackText = (userName)=>{
     fetch(APIlink, requestOptions)
     .then(response => {return response.json()})
     .then(data => {console.log(data);
-      alert(JSON.stringify(data));
+      alert("Data downloaded.");
       let text = "";
       for (let i = 0; i < data.length; i++) {
         text += JSON.stringify(data[i].Time) + ": " + JSON.stringify(data[i].Feedback) + "<br>";
@@ -66,32 +66,32 @@ var callAPIGetFeedbackText = (userName)=>{
 
 // https://html.form.guide/action/html-form-action-javascript-example/
 // Submit data EXAMPLE, for test. FEEL FREE TO DELETE
-function submitFormPHQ2(e) {
-    e.preventDefault();   
-    var myform = document.getElementById("wf-form-phq2-form-block");   
-    var formData = new FormData(myform);
+// function submitFormPHQ2(e) {
+//     e.preventDefault();   
+//     var myform = document.getElementById("wf-form-phq2-form-block");   
+//     var formData = new FormData(myform);
   
-    fetch("https://show.ratufa.io/json", {
-      method: "POST",
-      body: formData,
-    })
-      .then(response => {
-      if (!response.ok) {
-        throw new Error('network returns error');
-      }
-      return response.json();
-    })
-      .then((resp) => {
-        let respdiv = document.createElement("pre");
-        respdiv.innerHTML = JSON.stringify(resp, null, 2);
-        myform.replaceWith(respdiv);
-        console.log("resp from server ", resp);
-      })
-      .catch((error) => {
-        // Handle error
-        console.log("error ", error);
-      });
-}
+//     fetch("https://show.ratufa.io/json", {
+//       method: "POST",
+//       body: formData,
+//     })
+//       .then(response => {
+//       if (!response.ok) {
+//         throw new Error('network returns error');
+//       }
+//       return response.json();
+//     })
+//       .then((resp) => {
+//         let respdiv = document.createElement("pre");
+//         respdiv.innerHTML = JSON.stringify(resp, null, 2);
+//         myform.replaceWith(respdiv);
+//         console.log("resp from server ", resp);
+//       })
+//       .catch((error) => {
+//         // Handle error
+//         console.log("error ", error);
+//       });
+// }
   
 // var phq2FormSubmit = document.getElementById("submit-phq2-form");
 // phq2FormSubmit.addEventListener("submit", submitFormPHQ2);
