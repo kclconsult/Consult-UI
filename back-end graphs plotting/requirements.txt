@@ -1,0 +1,12 @@
+The libraries required to run the functions 'GetRandomECG', 
+'VisualizeBPData' and 'visualizeHRData' are:
+
+- matplotlib
+- mpld3
+- json
+- boto3
+- botocore
+- os
+- re 
+- random
+- logging 
