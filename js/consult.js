@@ -96,8 +96,8 @@ var callAPIGetMoodText = (userName)=>{
       };
     }
     // Element Id NEED to be changed
-    document.getElementById("mood_type_in_summary_mood").innerHTML = data[recent_index].Mood;
-    document.getElementById("mood_time_in_summary_mood").innerHTML = data[recent_index].Time;
+    document.getElementById("tab-summary-mood-text").innerHTML = "Mood:" + " " + data[recent_index].Mood;
+    document.getElementById("tab-summary-mood-date").innerHTML = "Date:" + " " + data[recent_index].Time;
     // Returns: "happy" in this test case
   })
   .catch((error) => console.log("error:", error));
