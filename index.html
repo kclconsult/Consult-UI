@@ -18,7 +18,7 @@
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
-<body class="body">
+<body class="body" onload="callAPIGetMoodText('USERNAME');">
   <div class="container-3 w-container">
     <div class="div-block">
       <div class="div-block-3"><img src="images/consult-logo.png" loading="lazy" width="258" sizes="(max-width: 479px) 43vw, (max-width: 767px) 44vw, 258px" srcset="images/consult-logo-p-500.png 500w, images/consult-logo.png 518w" alt=""></div>
@@ -80,7 +80,8 @@
             <div class="w-layout-grid summary-grid">
               <div id="w-node-bb7a7000-1468-8530-ba9e-1f723b322846-ea4d4c29" class="div-block-5">
                 <h3 id="w-node-bb7a7000-1468-8530-ba9e-1f723b322847-ea4d4c29" class="heading">Mood</h3>
-                <div id="w-node-bb7a7000-1468-8530-ba9e-1f723b32284c-ea4d4c29" class="text-block-9">Date<br>Source: </div>
+                <div id="tab-summary-mood-date" class="text-block-9">Date:</div>
+                <div id="tab-summary-mood-text" class="text-block-9">Mood:</div>
               </div><img id="w-node-_2316526d-a293-e711-04f6-a4d8fb4b502b-ea4d4c29" loading="lazy" src="images/mood-good.png" alt="">
             </div>
           </div>
