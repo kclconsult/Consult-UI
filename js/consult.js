@@ -348,7 +348,7 @@ const checkPhqDate = async (userName) => {
  const callPHQ = async (userName) => {
   document.getElementById("phq9-form").style.display = "none"
   document.getElementById("mood-grid").style.display = "none"
-
+  document.getElementById("phq2-form").style.display = "none"
   let data = await checkPhqDate(userName);
     //now you can directly use jsonData
   console.log(data);
