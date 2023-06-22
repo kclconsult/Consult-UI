@@ -1,352 +1,281 @@
-// Zhuoling added
-
-// Feedback Tab -- submit feedbacks to database 
-var callAPISubmitFeedback = (feedbackInput,userName)=>{
-    if (feedbackInput.length>0){
-        if (userName.length==0){
-            userName = "TempUserName";
-        }
-        // Get current date and time
-        var today = new Date();
-        var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-        var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-        var dateTime = date+' '+time;
-        // instantiate a headers object
-        var myHeaders = new Headers();
-        // add content type header to object
-        myHeaders.append("Content-Type", "application/json");
-        // using built in JSON utility package turn object to string and store in a variable
-        var raw = JSON.stringify({"time":dateTime, "userName":userName,"feedbackInput":feedbackInput});
-        // create a JSON object with parameters for API call and store in a variable
-        var requestOptions = {
-            method: 'POST',
-            headers: myHeaders,
-            body: raw,
-            redirect: 'follow'
-        };
-        // make API call with parameters and use promises to get response
-        fetch("https://trtbhfsrkl.execute-api.eu-west-2.amazonaws.com/dev", requestOptions) 
-        .then(response => response.text())
-        .then(result => alert(JSON.parse(result).body))
-        .catch(error => console.log('error', error));
-    }
-    else{
-        alert("Feedback or note must be filled out before submitting");
-        // return false;
-    }
-}
-
-
-// Feedback Tab -- download feedbacks from database 
-var callAPIGetFeedbackText = (userName)=>{
-    // add content type header to object
-    var myHeaders = new Headers();
-    // add content type header to object
-    myHeaders.append("Content-Type", "application/json");
-    // create a JSON object with parameters for API call and store in a variable
-    var requestOptions = {
-        headers: myHeaders,
-        method: 'GET',
-        // queryStringParameters: userName
-    };
-    // API + quary params
-    var APIlink = "https://hlufzfqexd.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName; //TODO: This is not solved yet -- how to pass the username to API
-    // make API call with parameters and use promises to get response
-    fetch(APIlink, requestOptions)
-    .then(response => {return response.json()})
-    .then(data => {console.log(data);
-      alert("Data downloaded.");
-      let text = "";
-      for (let i = 0; i < data.length; i++) {
-        text += JSON.stringify(data[i].Time) + ": " + JSON.stringify(data[i].Feedback) + "<br>";
-      }
-      document.getElementById("feedback-data-from-db").innerHTML = text;
-    })
-    .catch((error) => console.log("error:", error));
-    // Need to change format of output, line by line.
-    
-}
-
-
-// Summary Tab -- get latest mood (and the date) from database 
-var callAPIGetMoodText = (userName)=>{
-  // add content type header to object
-  var myHeaders = new Headers();
-  // add content type header to object
-  myHeaders.append("Content-Type", "application/json");
-  // create a JSON object with parameters for API call and store in a variable
-  var requestOptions = {
-      headers: myHeaders,
-      method: 'GET',
-      // queryStringParameters: userName
-  };
-  // API + quary params
-  var APIlink = "https://pmmxjmsimi.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName; //TODO: This is not solved yet -- how to pass the username to API
-  // make API call with parameters and use promises to get response
-  fetch(APIlink, requestOptions)
-  .then(response => {return response.json()})
-  .then(data => {console.log(data);
-    alert("Data downloaded.");
-    let maxtimestamp = 0;
-    let recent_index = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].time_stamp > maxtimestamp){
-        maxtimestamp = data[i].time_stamp;
-        recent_index = i;
-      };
-    }
-    // Element Id NEED to be changed
-    document.getElementById("mood_type_in_summary_mood").innerHTML = data[recent_index].Mood;
-    // Returns: "happy" in this test case
-  })
-  .catch((error) => console.log("error:", error));
-  
-}
-
-
-// Mood Tab --Mood grid (4x4) -- submit mood to database 
-var callAPISubmitMood = (moodInput,userName)=>{
-  if (userName.length==0){
-      userName = "TempUserName";
-  }
-  // Get current date and time
-  var today = new Date();
-  var date = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
-  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
-  var dateTime = date+' '+time;
-  // instantiate a headers object
-  var myHeaders = new Headers();
-  // add content type header to object
-  myHeaders.append("Content-Type", "application/json");
-  // using built in JSON utility package turn object to string and store in a variable
-  var raw = JSON.stringify({"time":dateTime, "userName":userName,"moodInput":moodInput,"timestamp":date});
-  // create a JSON object with parameters for API call and store in a variable
-  var requestOptions = {
-      method: 'POST',
-      headers: myHeaders,
-      body: raw,
-      redirect: 'follow'
-  };
-  // make API call with parameters and use promises to get response
-  fetch("https://u1aapxk6c3.execute-api.eu-west-2.amazonaws.com/dev", requestOptions) 
-  .then(response => response.text())
-  .then(result => alert(JSON.parse(result).body))
-  .catch(error => console.log('error', error));
-}
-
-
-// https://html.form.guide/action/html-form-action-javascript-example/
-// Submit data EXAMPLE, for test. FEEL FREE TO DELETE
-// function submitFormPHQ2(e) {
-//     // e.preventDefault();   
-//     var myform = document.getElementById("wf-form-phq2-form-block");   
-//     var formData = new FormData(myform);
-  
-//     fetch("https://show.ratufa.io/json", {
-//       method: "POST",
-//       body: formData,
-//     })
-//       .then(response => {
-//       if (!response.ok) {
-//         throw new Error('network returns error');
-//       }
-//       return response.json();
-//     })
-//       .then((resp) => {
-//         let respdiv = document.createElement("pre");
-//         respdiv.innerHTML = JSON.stringify(resp, null, 2);
-//         myform.replaceWith(respdiv);
-//         console.log("resp from server ", resp);
-//       })
-//       .catch((error) => {
-//         // Handle error
-//         console.log("error ", error);
-//       });
-// }
-
-
-// Mood Tab -- PHQ2 submit: 
-// 1) submit PHQ2 results to database
-// 2) check if both "no", if true activate Mood-grid; if false, activate PHQ9
-function submitFormPHQ2(userName) {
-  // e.preventDefault();   
-  var myform = document.getElementById("wf-form-phq2-form-block");   
-  var formData = new FormData(myform); 
-  var ele = myform.getElementsByTagName('input');
-  var total_score = 0;
-  var questionAnsweredNumber = 0;
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].type = "radio") {
-      if (ele[i].checked){
-        total_score += Number(ele[i].value);
-        questionAnsweredNumber += 1;
-      }  
-    }
-  }
-  if (questionAnsweredNumber === 2){
-    if (total_score === 0) {
-      // Submit form to database
-      document.getElementById("phq2-form").style.display = "none"
-      document.getElementById("mood-grid").style.display = "block"
-      for(var i=0;i<ele.length;i++){
-        ele[i].checked = false;
-      }
-    }
-    else {
-      document.getElementById("phq2-form").style.display = "none"
-      document.getElementById("phq9-form").style.display = "block"
-      document.getElementById("phq9-q10").style.display = "none"
-      for(var i=0;i<ele.length;i++)
-        ele[i].checked = false;
-    }
-    fetch("https://show.ratufa.io/json", {
-      method: "POST",
-      body: formData,
-    })
-  }
-  else{
-    alert("Please answer all the questions before sbumit.");
-  } 
-}
-
-
-// Mood Tab -- PHQ9 submit: 
-// 1) submit PHQ9 results to database
-// 2) activate Question 10 if necessary (scored more than 0 in Q1 to Q9)
-// 3) activate Mood-grid
-function submitFormPHQ9(userName) {
-  // e.preventDefault(); 
-  var questionNeededNumber = 9; 
-  var questionAnsweredNumber = 0;    
-  var myform = document.getElementById("wf-form-phq9-form-block");   
-  var ele = myform.getElementsByTagName('input');
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].type = "radio" && ele[i].checked) {
-        questionAnsweredNumber += 1; 
-    }
-  }
-  if (document.getElementById("phq9-q10").style.display === "block")
-    questionNeededNumber = 10;
-  if (document.getElementById("phq9-q10").style.display === "none")
-    questionNeededNumber = 9;
-  var total_score = 0;
-  if (questionAnsweredNumber === questionNeededNumber){
-    document.getElementById("phq9-form").style.display = "none"
-    document.getElementById("mood-grid").style.display = "block" 
-    if (questionNeededNumber === 9){
-      for (i = 0; i < ele.length; i++) {
-        if (ele[i].type = "radio" && ele[i].checked) {
-          total_score += Number(ele[i].value);
-        }
-      }
-    }
-    if (questionNeededNumber === 10){
-      for (i = 0; i < 36; i++) {
-        if (ele[i].type = "radio" && ele[i].checked) {
-            total_score += Number(ele[i].value);
-        }
-      }
-      for (i = 36; i < 40; i++) {
-        if (ele[i].type = "radio" && ele[i].checked) {
-            total_score = total_score + "-" + ele[i].value;
-        }
-      }
-    }
-    // Submit to AWS
-    alert("Your answer has been submitted.");
-    for(var i = 0;i < ele.length;i++)
-      ele[i].checked = false;
-  }
-  else {
-    alert("Please answer all the questions before sbumit.");    
-  } 
-}
-
-// Mood Tab -- PHQ9 -- activate Question 10
-function showPhq9Q10() {
-  document.getElementById("phq9-q10").style.display = "block"
-}
-
-// Mood Tab -- PHQ9 -- hide Question 10
-function checkForPhq9Q10() {
-  var myform = document.getElementById("phq9-form-1to9-block");    
-  var ele = myform.getElementsByTagName('input');
-  var total_score = 0;
-  for (i = 0; i < ele.length; i++) {
-    if (ele[i].type = "radio") {
-      if (ele[i].checked)
-        total_score += Number(ele[i].value);
-    }
-  }
-  if (total_score === 0) {
-    // Submit form to database
-    document.getElementById("phq9-q10").style.display = "none"
-  }
-}
-
-
-// Mood Tab -- PHQ9 --check when is the last time took PHQ2 (PHQ2 should appear every 2 weeks)
-const checkPhqDate = async (userName) => {
-  var myHeaders = new Headers();
-  // add content type header to object
-  myHeaders.append("Content-Type", "application/json");
-  // create a JSON object with parameters for API call and store in a variable
-  var requestOptions = {
-      headers: myHeaders,
-      method: 'GET',
-      // queryStringParameters: userName
-  };
-  var APIlink = "https://rrdz4mzx1g.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName;
-  let moodPhqData  = await fetch(APIlink, requestOptions)
-  //use string literals
-  let moodPhqDataJson = await moodPhqData.json();
-  return moodPhqDataJson;
- }
-
- const callPHQ = async (userName) => {
-  document.getElementById("phq9-form").style.display = "none"
-  document.getElementById("mood-grid").style.display = "none"
-
-  let data = await checkPhqDate(userName);
-    //now you can directly use jsonData
-  console.log(data);
-  var last_timestamp = 0;
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].time_stamp > last_timestamp){
-      last_timestamp = data[i].time_stamp;
-    };
-  }
-  // console.log(maxtimestamp);
-  // alert(maxtimestamp);
-  if (last_timestamp === 0){
-    last_timestamp = new Date().getTime();
-  }
-  // console.log(last_timestamp);
-  // alert(new Date().getTime());
-  var x = document.getElementById("phq2-form");
-  var today = new Date().getTime();
-  //If it was taken more than 7 days ago (604800000), display PHQ-2
-  if (today - last_timestamp > 604800000) {
-    // alert("Too long ago");
-    x.style.display = "block";
-  } else {
-    // alert("Not long enough");
-    x.style.display = "none";
-    document.getElementById("mood-grid").style.display = "block"
-  }
-  }
-
-
-// Mood Tab -- Mood grid --Confirm choice
-function confirmWindow(userName) {
-  let text = "Do you want to select this image? \nPress \"Cancel\" to reselect or press \"OK\" to conform.";
-  if (confirm(text) == true) {
-    text = "Mood submitted.";
-    var moodId = event.target.id; //event.srcElement.id
-    const myArray = moodId.split("-");
-    let moodInput = myArray[2];
-    // alert(moodInput);
-    callAPISubmitMood(moodInput,userName);
-  } 
-  // document.getElementById("demo").innerHTML = text;
-}
+        <div id="mood" data-w-tab="tabMood" class="w-tab-pane">
+          <div id="phq2-form" class="w-container">
+            <div id="phq2-form-block" class="form">
+              <form id="wf-form-phq2-form-block" name="wf-form-phq2-form-block" data-name="phq2-form-block" method="get">
+                <h3 class="heading-3">PHQ2 Form</h3>
+                <div id="phq-q1" class="phq2-question">
+                  <h5 class="heading-5">Question 1</h5>
+                  <p class="paragraph-3">During the last month, have you often been bothered by feeling down, depressed or hopeless?</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q1-Yes" name="phq2-q1" value="1" data-name="phq2-q1" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="Yes">Yes</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q1-No" name="phq2-q1" value="0" data-name="phq2-q1" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="No">No</span>
+                  </label>
+                </div>
+                <div id="phq-q2" class="phq2-question">
+                  <h5 class="heading-5">Question 2</h5>
+                  <p class="paragraph-3">During the last month, have you often been bothered by having little interest or pleasure in doing things?</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q2-Yes" name="phq-q2" value="1" data-name="phq-q2" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="Yes-2">Yes</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="phq2-q2-No" name="phq-q2" value="0" data-name="phq-q2" required="required" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="No-2">No</span>
+                  </label>
+                </div>
+                <!-- <label><input id="submit-phq2-form" type="submit">Submit</label> -->
+                <a id="submit-phq2-form" href="#" class="consult-submit w-button" onclick="submitFormPHQ2('USERNAME')">Submit</a> <!--Submit form to database (?), activate either PHQ9 or Picture Grid-->
+              </form>
+            </div>  
+          </div>
+          <div id="phq9-form" class="w-container">
+            <div id="phq9-form-block" class="form">
+              <form id="wf-form-phq9-form-block" name="wf-form-phq9-form-block" data-name="phq9-form-block" method="get">
+                <h3 class="heading-3">Patient Health Questionnaire (PHQ-9)</h3>
+                <h5 class="heading-5">Over the last <em>2 weeks</em>, how ofter have you been bothered by any of the following problems?</h5>
+                <div id="phq9-form-1to9-block" class="form">
+                <div id="phq9-q1" class="phq9-question">
+                  <p class="paragraph-3"><strong>1. </strong>Little interest or pleasure in doing things</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="1-0" name="phq9-q1" value="0" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="1-1" name="phq9-q1" value="1" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="1-2" name="phq9-q1" value="2" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="1-3" name="phq9-q1" value="3" data-name="phq9-q1" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q2" class="phq9-question">
+                  <p class="paragraph-3"><strong>2. </strong>Feeling down, depressed, or hopeless</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="2-0" name="phq9-q2" value="0" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="2-1" name="phq9-q2" value="1" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="2-2" name="phq9-q2" value="2" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="2-3" name="phq9-q2" value="3" data-name="phq9-q2" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q3" class="phq9-question">
+                  <p class="paragraph-3"><strong>3. </strong>Trouble falling or staying aleep, or sleeping too much</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="3-0" name="phq9-q3" value="0" data-name="phq9-q3" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="3-1" name="phq9-q3" value="1" data-name="phq9-q3" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="3-2" name="phq9-q3" value="2" data-name="phq9-q3" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="3-3" name="phq9-q3" value="3" data-name="phq9-q3" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q4" class="phq9-question">
+                  <p class="paragraph-3"><strong>4. </strong>Feeling tired or having little energy</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="4-0" name="phq9-q4" value="0" data-name="phq9-q4" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="4-1" name="phq9-q4" value="1" data-name="phq9-q4" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="4-2" name="phq9-q4" value="2" data-name="phq9-q4" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="4-3" name="phq9-q4" value="3" data-name="phq9-q4" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q5" class="phq9-question">
+                  <p class="paragraph-3"><strong>5. </strong>Poor appetite or overeating</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="5-0" name="phq9-q5" value="0" data-name="phq9-q5" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="5-1" name="phq9-q5" value="1" data-name="phq9-q5" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="5-2" name="phq9-q5" value="2" data-name="phq9-q5" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="5-3" name="phq9-q5" value="3" data-name="phq9-q5" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q6" class="phq9-question">
+                  <p class="paragraph-3"><strong>6. </strong>Feeling bad about yourself - or that you are a failure or have let yourself or your family down</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="6-0" name="phq9-q6" value="0" data-name="phq9-q6" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="6-1" name="phq9-q6" value="1" data-name="phq9-q6" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="6-2" name="phq9-q6" value="2" data-name="phq9-q6" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="6-3" name="phq9-q6" value="3" data-name="phq9-q6" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q7" class="phq9-question">
+                  <p class="paragraph-3"><strong>7. </strong>Trouble concentrating on things, such as reading the newspaper or watching television</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="7-0" name="phq9-q7" value="0" data-name="phq9-q7" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="7-1" name="phq9-q7" value="1" data-name="phq9-q7" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="7-2" name="phq9-q7" value="2" data-name="phq9-q7" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="7-3" name="phq9-q7" value="3" data-name="phq9-q7" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q8" class="phq9-question">
+                  <p class="paragraph-3"><strong>8. </strong>Moving or speaking so slowly that other peope could have noticed. Or the opposite - being so figety or restless that you have been moving around a lot more than usual</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="8-0" name="phq9-q8" value="0" data-name="phq9-q8" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="8-1" name="phq9-q8" value="1" data-name="phq9-q8" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="8-2" name="phq9-q8" value="2" data-name="phq9-q8" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="8-3" name="phq9-q8" value="3" data-name="phq9-q8" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                <div id="phq9-q9" class="phq9-question">
+                  <p class="paragraph-3"><strong>9. </strong>Thoughts that you would be better off dead, or ofhurting yourself</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="9-0" name="phq9-q9" value="0" data-name="phq9-q9" required="" class="w-form-formradioinput w-radio-input" onclick="checkForPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="0">Not at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="9-1" name="phq9-q9" value="1" data-name="phq9-q9" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="1">Several days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="9-2" name="phq9-q9" value="2" data-name="phq9-q9" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="2">More than half the days</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="9-3" name="phq9-q9" value="3" data-name="phq9-q9" required="" class="w-form-formradioinput w-radio-input" onclick="showPhq9Q10()">
+                    <span class="radio-button-label w-form-label" for="3">Nearly every day</span>
+                  </label>
+                </div>
+                </div>
+                <div id="phq9-q10" class="phq9-question">
+                  <p class="paragraph-3"><strong>10.</strong> If you checked off <em>any problems</em>, how <em>difficult</em> have these problems made it for you to do your work, take care of things at home, or get along with other people?</p>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="10-0" name="phq9-q10" value="Not difficult at all" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="0">Not difficult at all</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="10-1" name="phq9-q10" value="Somewhat difficult" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="1">Somewhat difficult</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="10-2" name="phq9-q10" value="Very difficult" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="2">Very difficult</span>
+                  </label>
+                  <label class="radio-button-field w-radio">
+                    <input type="radio" id="10-3" name="phq9-q10" value="Extremely difficult" data-name="phq9-q10" required="" class="w-form-formradioinput w-radio-input">
+                    <span class="radio-button-label w-form-label" for="3">Extremely difficult</span>
+                  </label>
+                </div>
+                <a id="submitt-phq9-form" href="#" class="consult-submit w-button" onclick="submitFormPHQ9('USERNAME')">Submit</a>
+                <!-- Button NEED SUBMIT FUNCTION -->
+              </form>
+              <!-- <div id="phq2-form-block-suc" class="success-message w-form-done">
+                <div class="text-block-12">Answers to PHQ-9 Form is submitted.</div>
+                <a href="#mood-grid" class="button-2 w-button">Confirm</a>
+              </div>
+              <div id="phq2-form-block-fail" class="w-form-fail">
+                <div class="text-block-11">You need to answer all the questions in this form.</div>
+              </div> -->
+            </div>
+          </div>
+          <div id="mood-grid" class="w-container">
+            <h1 class="heading-3">Which image best represents your current MOOD?</h1>
+            <div class="w-row">
+              <div class="column w-col w-col-3">
+                <div class="div-block-6">
+                  <img id="mood-1-afraid" width="135" loading="lazy" src="images/1_3.jpg" alt="" class="image" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-5-frustrated" width="135" loading="lazy" src="images/5_2.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-9-miserable" width="136" loading="lazy" src="images/9_3.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-13-gloomy" width="135" loading="lazy" src="images/13_3.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                </div>
+              </div>
+              <div class="w-col w-col-3">
+                <div class="div-block-6">
+                  <img id="mood-2-tense" width="135" loading="lazy" src="images/2_1.jpg" alt="" class="image" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-6-angry" width="136" loading="lazy" src="images/6_3.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-10-sad" width="136" loading="lazy" src="images/10_1.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-14-tired" width="136" loading="lazy" src="images/13_1.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                </div>
+              </div>
+              <div class="w-col w-col-3">
+                <div class="div-block-6">
+                  <img id="mood-3-excited" width="135" loading="lazy" src="images/3_1.jpg" alt="" class="image" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-7-happy" width="136" loading="lazy" src="images/7_3.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-11-calm" width="136" loading="lazy" src="images/11_1.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-15-sleepy" width="136" loading="lazy" src="images/15_3.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                </div>
+              </div>
+              <div class="w-col w-col-3">
+                <div class="div-block-6">
+                  <img id="mood-4-delighted" width="135" loading="lazy" src="images/4_1.jpg" alt="" class="image" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-8-glad" width="136" loading="lazy" src="images/8_1.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-12-satisfied" width="136" loading="lazy" src="images/12_2.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                  <img id="mood-16-serene" width="136" loading="lazy" src="images/16_1.jpg" alt="" onclick="confirmWindow('USERNAME')">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
