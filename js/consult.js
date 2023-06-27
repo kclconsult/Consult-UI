@@ -55,7 +55,6 @@ var callAPIGetFeedbackText = (userName)=>{
     fetch(APIlink, requestOptions)
     .then(response => {return response.json()})
     .then(data => {console.log(data);
-      alert("Data downloaded.");
       let text = "";
       for (let i = 0; i < data.length; i++) {
         text += JSON.stringify(data[i].Time) + ": " + JSON.stringify(data[i].Feedback) + "<br>";
