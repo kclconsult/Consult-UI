@@ -88,7 +88,7 @@ var callAPIGetMoodText = (userName)=>{
   fetch(APIlink, requestOptions)
   .then(response => {return response.json()})
   .then(data => {console.log(data);
-    alert("Data downloaded.");
+    //alert("Data downloaded.");
     let maxtimestamp = 0;
     let recent_index = 0;
     for (let i = 0; i < data.length; i++) {
