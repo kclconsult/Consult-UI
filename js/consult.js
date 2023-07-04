@@ -7,7 +7,7 @@
 * Document Object Model (DOM)
 */
 $( document ).ready(function() {
-    console.log("DOM is load.");
+    // console.log("DOM is load.");
     var pageURL = window.location.href;
     pageURL = pageURL.toString();
 
@@ -17,19 +17,18 @@ $( document ).ready(function() {
         return;
     }
     var parameters = pageURL.substring(paramIndex + 1);
-    console.log("page url: " + pageURL);
-    console.log("url parameters:" + parameters);
+    // console.log("page url: " + pageURL);
+    // console.log("url parameters:" + parameters);
 
     var username = parameters.split('=')[1]
     var text = "Logged in as: " + username;
-    console.log(text);
+    // console.log(text);
     document.getElementById("display-username").innerHTML = text;
 });
 
 
 // Get logged in username
 function getUsername(){
-    console.log("DOM is load.");
     var pageURL = window.location.href;
     pageURL = pageURL.toString();
 
