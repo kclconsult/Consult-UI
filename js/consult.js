@@ -34,17 +34,7 @@ $( document ).ready(function() {
 
 // Get logged in username
 function getUsername(){
-    var pageURL = window.location.href;
-    pageURL = pageURL.toString();
-
-    // get url string
-    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
-    if (paramIndex === -1){
-        return;
-    }
-    var parameters = pageURL.substring(paramIndex + 1);
-    var username = parameters.split('=')[1]
-    username = "USERNAME";
+    var username = "USERNAME";
     return username;
 }
 
