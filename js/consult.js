@@ -27,6 +27,7 @@ $( document ).ready(function() {
 });
 
 
+// Get logged in username
 function getUsername(){
     console.log("DOM is load.");
     var pageURL = window.location.href;
@@ -43,6 +44,7 @@ function getUsername(){
 }
 
 
+// Split parameters in the URL;;
 function getParameter(url,param){
     var urlVars = url.split('&');
     var returnValue;
@@ -63,6 +65,7 @@ function getParameter(url,param){
 // Feedback Tab -- submit feedbacks to database 
 var callAPISubmitFeedback = (feedbackInput,userName)=>{
     if (feedbackInput.length>0){
+        userName = getUsername();
         if (userName.length==0){
             userName = "TempUserName";
         }
@@ -99,6 +102,10 @@ var callAPISubmitFeedback = (feedbackInput,userName)=>{
 
 // Feedback Tab -- download feedbacks from database 
 var callAPIGetFeedbackText = (userName)=>{
+    userName = getUsername();
+    if (userName.length==0){
+        userName = "TempUserName";
+    }
     // add content type header to object
     var myHeaders = new Headers();
     // add content type header to object
@@ -110,7 +117,7 @@ var callAPIGetFeedbackText = (userName)=>{
         // queryStringParameters: userName
     };
     // API + quary params
-    var APIlink = "https://hlufzfqexd.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName; //TODO: This is not solved yet -- how to pass the username to API
+    var APIlink = "https://hlufzfqexd.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + userName; 
     // make API call with parameters and use promises to get response
     fetch(APIlink, requestOptions)
     .then(response => {return response.json()})
@@ -129,6 +136,10 @@ var callAPIGetFeedbackText = (userName)=>{
 
 // Summary Tab -- get latest mood (and the date) from database 
 var callAPIGetMoodText = (userName)=>{
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   // add content type header to object
   var myHeaders = new Headers();
   // add content type header to object
@@ -202,6 +213,10 @@ var callAPISubmitMood = (moodInput,userName)=>{
 // 1) submit PHQ2 results to database
 // 2) check if both "no", if true activate Mood-grid; if false, activate PHQ9
 function submitFormPHQ2(userName) {
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   // e.preventDefault();   
   var myform = document.getElementById("wf-form-phq2-form-block");   
   var formData = new FormData(myform); 
@@ -293,6 +308,10 @@ function submitFormPHQ2(userName) {
 // 2) activate Question 10 if necessary (scored more than 0 in Q1 to Q9)
 // 3) activate Mood-grid
 function submitFormPHQ9(userName) {
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   // e.preventDefault(); 
   var questionNeededNumber = 9; 
   var questionAnsweredNumber = 0;    
@@ -389,6 +408,10 @@ function checkForPhq9Q10() {
 
 // Mood Tab -- PHQ9 --check when is the last time took PHQ2 (PHQ2 should appear every 2 weeks)
 const checkPhqDate = async (userName) => {
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   var myHeaders = new Headers();
   // add content type header to object
   myHeaders.append("Content-Type", "application/json");
@@ -409,6 +432,10 @@ const checkPhqDate = async (userName) => {
   document.getElementById("phq9-form").style.display = "none"
   document.getElementById("mood-grid").style.display = "none"
   document.getElementById("phq2-form").style.display = "none"
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   let data = await checkPhqDate(userName);
     //now you can directly use jsonData
   console.log(data);
@@ -442,6 +469,10 @@ const checkPhqDate = async (userName) => {
 
 // Mood Tab -- Mood grid --Confirm choice
 function confirmWindow(userName) {
+  userName = getUsername();
+  if (userName.length==0){
+    userName = "TempUserName";
+  }
   let text = "Do you want to select this image? \nPress \"Cancel\" to reselect or press \"OK\" to conform.";
   if (confirm(text) == true) {
     text = "Mood submitted.";
