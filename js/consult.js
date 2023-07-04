@@ -3,6 +3,56 @@
 // Hide address of Dashboard
 // window.history.replaceState('','','/');
 
+/* 
+* Document Object Model (DOM)
+*/
+$( document ).ready(function() {
+    console.log("DOM is load.");
+    var pageURL = window.location.href;
+    pageURL = pageURL.toString();
+
+    // get url string
+    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    if (paramIndex === -1){
+        return;
+    }
+    var parameters = pageURL.substring(paramIndex + 1);
+    console.log("page url: " + pageURL);
+    console.log("url parameters:" + parameters);
+
+    var idToken = getParameter(parameters, "id_token =");
+    var accessToken = getParameter(parameters, "access_token =");
+    console.log("id token: " + idToken);
+    console.log("access token:" + accessToken);
+
+    var idTokenDecoded = atob(idToken.split('.')[1]);
+    var accessTokenDecoded = atob(accessToken.split('.')[1]);
+    console.log("id token decoded: " + idTokenDecoded);
+    console.log("access token decoded:" + accessTokenDecoded);
+
+    var idTokenJson = JSON.parse(idTokenDecoded);
+    var accessTokenJson = JSON.parse(accessTokenDecoded);
+
+    
+});
+
+function getParameter(url,param){
+    var urlVars = url.split('&');
+    var returnValue;
+    for (var i = 0; i < urlVars.length; i++){
+        var urlParam = urlVars[i];
+        // get up to index
+        var index = urlParam.toString().indexOf("=");
+        urlParam = urlParam.substring(0, index + 1);
+        if (param === urlParam){
+            returnValue = urlVars[i].replace(param,"");
+            i = urlVars.length; //exit the loop
+        }
+    }
+    return returnValue;
+}
+
+
 // Feedback Tab -- submit feedbacks to database 
 var callAPISubmitFeedback = (feedbackInput,userName)=>{
     if (feedbackInput.length>0){
