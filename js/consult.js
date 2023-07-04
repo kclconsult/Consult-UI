@@ -12,7 +12,7 @@ $( document ).ready(function() {
     pageURL = pageURL.toString();
 
     // get url string
-    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    var paramIndex = pageURL.indexOf("?"); // localhost uses '#' instead;
     if (paramIndex === -1){
         return;
     }
@@ -20,21 +20,28 @@ $( document ).ready(function() {
     console.log("page url: " + pageURL);
     console.log("url parameters:" + parameters);
 
-    var idToken = getParameter(parameters, "id_token =");
-    var accessToken = getParameter(parameters, "access_token =");
-    console.log("id token: " + idToken);
-    console.log("access token:" + accessToken);
-
-    var idTokenDecoded = atob(idToken.split('.')[1]);
-    var accessTokenDecoded = atob(accessToken.split('.')[1]);
-    console.log("id token decoded: " + idTokenDecoded);
-    console.log("access token decoded:" + accessTokenDecoded);
-
-    var idTokenJson = JSON.parse(idTokenDecoded);
-    var accessTokenJson = JSON.parse(accessTokenDecoded);
-
-    
+    var username = parameters.split('.')[1]
+    var text = "Logged in as: " + username;
+    console.log(text);
+    document.getElementById("display-username").innerHTML = text;
 });
+
+
+function getUsername(){
+    console.log("DOM is load.");
+    var pageURL = window.location.href;
+    pageURL = pageURL.toString();
+
+    // get url string
+    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    if (paramIndex === -1){
+        return;
+    }
+    var parameters = pageURL.substring(paramIndex + 1);
+    var username = parameters.split('.')[1]
+    return username;
+}
+
 
 function getParameter(url,param){
     var urlVars = url.split('&');
@@ -159,6 +166,7 @@ var callAPIGetMoodText = (userName)=>{
 
 // Mood Tab --Mood grid (4x4) -- submit mood to database 
 var callAPISubmitMood = (moodInput,userName)=>{
+  userName = getUsername();
   if (userName.length==0){
       userName = "TempUserName";
   }
