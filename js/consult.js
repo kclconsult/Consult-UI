@@ -12,7 +12,7 @@ $( document ).ready(function() {
     pageURL = pageURL.toString();
 
     // get url string
-    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    var paramIndex = pageURL.indexOf("#"); // may need to use '?' instead;
     if (paramIndex === -1){
         return;
     }
