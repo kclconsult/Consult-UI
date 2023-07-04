@@ -7,44 +7,38 @@
 * Document Object Model (DOM)
 */
 $( document ).ready(function() {
-    console.log("DOM is load.");
+    // console.log("DOM is load.");
     var pageURL = window.location.href;
     pageURL = pageURL.toString();
 
     // get url string
-    var paramIndex = pageURL.indexOf("#"); // may need to use '?' instead;
+    var paramIndex = pageURL.indexOf("#"); // hosted on web uses ? localhost uses # instead;
     if (paramIndex === -1){
         return;
     }
     var parameters = pageURL.substring(paramIndex + 1);
-    console.log("page url: " + pageURL);
-    console.log("url parameters:" + parameters);
-
-    // var username = parameters.split('=')[1]
-    // var text = "Logged in as: " + username;
-    // console.log(text);
-    // document.getElementById("display-username").innerHTML = text;
-    
     var idToken = getParameter(parameters, "id_token=");
-    var accessToken = getParameter(parameters, "access_token=");
-    console.log("id token: " + idToken);
-    console.log("access token:" + accessToken);
-
     var idTokenDecoded = atob(idToken.split('.')[1]);
-    var accessTokenDecoded = atob(accessToken.split('.')[1]);
-    console.log("id token decoded: " + idTokenDecoded);
-    console.log("access token decoded:" + accessTokenDecoded);
-
     var idTokenJson = JSON.parse(idTokenDecoded);
-    var accessTokenJson = JSON.parse(accessTokenDecoded);
-
-    console.log("USER ID:" + idTokenJson.sub);
+    var text = "Logged in as: " + idTokenJson.sub;
+    document.getElementById("display-username").innerHTML = text;
 });
 
 
-// Get logged in username
 function getUsername(){
-    var username = "USERNAME";
+    var pageURL = window.location.href;
+    pageURL = pageURL.toString();
+
+    // get url string
+    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    if (paramIndex === -1){
+        return;
+    }
+    var parameters = pageURL.substring(paramIndex + 1);
+    var idToken = getParameter(parameters, "id_token=");
+    var idTokenDecoded = atob(idToken.split('.')[1]);
+    var idTokenJson = JSON.parse(idTokenDecoded);
+    var username = idTokenJson.sub;
     return username;
 }
 
