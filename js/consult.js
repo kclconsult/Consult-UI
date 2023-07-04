@@ -30,7 +30,7 @@ function getUsername(){
     pageURL = pageURL.toString();
 
     // get url string
-    var paramIndex = pageURL.indexOf("?"); // localhost uses # instead;
+    var paramIndex = pageURL.indexOf("#"); //  hosted on web uses ? localhost uses # instead;
     if (paramIndex === -1){
         return;
     }
