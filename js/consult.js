@@ -44,6 +44,7 @@ function getUsername(){
     }
     var parameters = pageURL.substring(paramIndex + 1);
     var username = parameters.split('=')[1]
+    username = "USERNAME";
     return username;
 }
 
