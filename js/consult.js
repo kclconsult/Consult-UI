@@ -1,7 +1,7 @@
 // Zhuoling added
 
 // Hide address of Dashboard
-window.history.replaceState('','','/');
+// window.history.replaceState('','','/');
 
 // Feedback Tab -- submit feedbacks to database 
 var callAPISubmitFeedback = (feedbackInput,userName)=>{
