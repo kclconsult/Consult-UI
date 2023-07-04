@@ -17,13 +17,18 @@ $( document ).ready(function() {
         return;
     }
     var parameters = pageURL.substring(paramIndex + 1);
-    // console.log("page url: " + pageURL);
-    // console.log("url parameters:" + parameters);
+    console.log("page url: " + pageURL);
+    console.log("url parameters:" + parameters);
 
     var username = parameters.split('=')[1]
     var text = "Logged in as: " + username;
-    // console.log(text);
+    console.log(text);
     document.getElementById("display-username").innerHTML = text;
+        
+    var idToken = getParameter(parameters, "id_token =");
+    var accessToken = getParameter(parameters, "access_token =");
+    console.log("id token: " + idToken);
+    console.log("access token:" + accessToken);
 });
 
 
