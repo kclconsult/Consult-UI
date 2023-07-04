@@ -20,7 +20,7 @@ $( document ).ready(function() {
     console.log("page url: " + pageURL);
     console.log("url parameters:" + parameters);
 
-    var username = parameters.split('.')[1]
+    var username = parameters.split('=')[1]
     var text = "Logged in as: " + username;
     console.log(text);
     document.getElementById("display-username").innerHTML = text;
@@ -38,7 +38,7 @@ function getUsername(){
         return;
     }
     var parameters = pageURL.substring(paramIndex + 1);
-    var username = parameters.split('.')[1]
+    var username = parameters.split('=')[1]
     return username;
 }
 
