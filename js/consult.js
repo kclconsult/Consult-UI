@@ -167,7 +167,15 @@ var callAPIGetMoodText = (userName)=>{
     // Element Id NEED to be changed
     document.getElementById("tab-summary-mood-text").innerHTML = "Mood:" + " " + data[recent_index].Mood;
     document.getElementById("tab-summary-mood-date").innerHTML = "Date:" + " " + data[recent_index].Time;
-    // Returns: "happy" in this test case
+    // change tab colour and picture based on results
+    if (data[recent_index].Mood === "afraid"||"sad"||"tense"||"frustrated"||"angry"||"miserable"||"gloomy"||"tired") {
+      document.getElementById("summary-grid-mood").style.backgroundColor = "#ee6863"; 
+      document.getElementById("summary-grid-mood-picture").src= "images/mood-bad.png";
+    }
+    if (data[recent_index].Mood === "excited"||"delighted"||"happy"||"glad"||"satisfied"||"calm"||"sleepy"||"serene") {
+      document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
+      document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
+    }       
   })
   .catch((error) => console.log("error:", error));
   
