@@ -172,7 +172,7 @@ var callAPIGetMoodText = (userName)=>{
       document.getElementById("summary-grid-mood").style.backgroundColor = "#ee6863"; 
       document.getElementById("summary-grid-mood-picture").src= "images/mood-bad.png";
     }
-    if (data[recent_index].Mood === "excited"||"delighted"||"happy"||"glad"||"satisfied"||"calm"||"sleepy"||"serene") {
+    else if (data[recent_index].Mood === "excited"||"delighted"||"happy"||"glad"||"satisfied"||"calm"||"sleepy"||"serene") {
       document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
       document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
     }       
