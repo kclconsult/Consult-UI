@@ -168,11 +168,12 @@ var callAPIGetMoodText = (userName)=>{
     document.getElementById("tab-summary-mood-text").innerHTML = "Mood:" + " " + data[recent_index].Mood;
     document.getElementById("tab-summary-mood-date").innerHTML = "Date:" + " " + data[recent_index].Time;
     // change tab colour and picture based on results
-    if (data[recent_index].Mood === "afraid"||"sad"||"tense"||"frustrated"||"angry"||"miserable"||"gloomy"||"tired") {
+    var resultText = data[recent_index].Mood;
+    if (resultText === "afraid"||resultText === "sad"||resultText === "tense"||resultText === "frustrated"||resultText === "angry"||resultText === "miserable"||resultText === "gloomy"||resultText === "tired") {
       document.getElementById("summary-grid-mood").style.backgroundColor = "#ee6863"; 
       document.getElementById("summary-grid-mood-picture").src= "images/mood-bad.png";
     }
-    else if (data[recent_index].Mood === "excited"||"delighted"||"happy"||"glad"||"satisfied"||"calm"||"sleepy"||"serene") {
+    else if (resultText === "excited"||resultText === "delighted"||resultText === "happy"||resultText === "glad"||resultText === "satisfied"||resultText === "calm"||resultText === "sleepy"||resultText === "serene") {
       document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
       document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
     }       
