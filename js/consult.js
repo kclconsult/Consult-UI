@@ -196,7 +196,7 @@ var callAPIGetMoodText = (userName)=>{
   fetch(APIlink, requestOptions)
   .then(response => {return response.json()})
   .then(data => {
-    document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: " +  data[2] + "<br />" + "Heart rate at rest: " +  data[1];
+    document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: " +  data[2] + "<br />" + "Heart rate (resting): " +  data[1];
     var today = new Date().getTime()/1000; // in seconds
     const hr_record_date = new Date(data[0]);
     const hr_timestamp = hr_record_date.getTime()/1000;  // in seconds
@@ -209,7 +209,7 @@ var callAPIGetMoodText = (userName)=>{
       document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
     }
     else{
-      document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate at rest
+      document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate (resting)
       document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
     }; 
   })
