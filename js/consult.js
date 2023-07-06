@@ -154,7 +154,7 @@ var callAPIGetMoodText = (userName)=>{
   // make API call with parameters and use promises to get response
   fetch(APIlink, requestOptions)
   .then(response => {return response.json()})
-  .then(data => {console.log(data);
+  .then(data => {
     //alert("Data downloaded.");
     let maxtimestamp = 0;
     let recent_index = 0;
@@ -497,11 +497,9 @@ const checkPhqDate = async (userName) => {
   var x = document.getElementById("phq2-form");
   var today = new Date().getTime()/1000; // in seconds
   //If it was taken more than 7 days ago (604800), display PHQ-2
-  if (today - last_timestamp < 604800) {
-    // alert("Too long ago");
+  if (today - last_timestamp > 604800) {
     x.style.display = "block";
   } else {
-    // alert("Not long enough");
     x.style.display = "none";
     document.getElementById("mood-grid").style.display = "block"
   }
