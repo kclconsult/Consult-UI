@@ -120,7 +120,7 @@ var callAPIGetFeedbackText = (userName)=>{
     // make API call with parameters and use promises to get response
     fetch(APIlink, requestOptions)
     .then(response => {return response.json()})
-    .then(data => {console.log(data);
+    .then(data => {
       let text = "";
       for (let i = 0; i < data.length; i++) {
         text += JSON.stringify(data[i].Time) + ": " + JSON.stringify(data[i].Feedback) + "<br>";
@@ -448,7 +448,7 @@ function checkForPhq9Q10() {
 }
 
 
-// Mood Tab -- PHQ2 --check when is the last time took PHQ2 (PHQ2 should appear every 2 weeks)
+// Mood Tab -- PHQ2 --check when is the last time took PHQ2 (PHQ2 should appear every week)
 const checkPhqDate = async (userName) => {
   userName = getUsername();
   if (userName.length==0){
@@ -479,8 +479,6 @@ const checkPhqDate = async (userName) => {
     userName = "TempUserName";
   }
   let data = await checkPhqDate(userName);
-    //now you can directly use jsonData
-  console.log(data);
   var last_timestamp = 0;
   for (let i = 0; i < data.length; i++) {
     if (data[i].time_stamp > last_timestamp){
