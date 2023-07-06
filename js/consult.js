@@ -176,10 +176,19 @@ var callAPIGetMoodText = (userName)=>{
     else if (resultText === "excited"||resultText === "delighted"||resultText === "happy"||resultText === "glad"||resultText === "satisfied"||resultText === "calm"||resultText === "sleepy"||resultText === "serene") {
       document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
       document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
-    }       
+    } 
+    else {
+      document.getElementById("summary-grid-mood").style.backgroundColor = "#999";
+      document.getElementById("summary-grid-mood-picture").src= "images/mood-meh.png";
+    };  
+    var today = new Date().getTime()/1000; // in seconds
+    //If it was taken more than 7 days ago (604800), show it in gray
+    if (today -  data[recent_index].time_stamp > 604800) {
+      document.getElementById("summary-grid-mood").style.backgroundColor = "#777";
+      document.getElementById("tab-summary-mood-date").innerHTML = "Date:" +  " " + data[recent_index].Time + "<br />" + "(more than 7 days ago)";
+    };
   })
-  .catch((error) => console.log("error:", error));
-  
+  .catch((error) => console.log("error:", error));  
 }
 
 
@@ -414,7 +423,7 @@ function checkForPhq9Q10() {
 }
 
 
-// Mood Tab -- PHQ9 --check when is the last time took PHQ2 (PHQ2 should appear every 2 weeks)
+// Mood Tab -- PHQ2 --check when is the last time took PHQ2 (PHQ2 should appear every 2 weeks)
 const checkPhqDate = async (userName) => {
   userName = getUsername();
   if (userName.length==0){
@@ -461,9 +470,9 @@ const checkPhqDate = async (userName) => {
   // console.log(last_timestamp);
   // alert(new Date().getTime());
   var x = document.getElementById("phq2-form");
-  var today = new Date().getTime();
-  //If it was taken more than 7 days ago (604800000), display PHQ-2
-  if (today - last_timestamp < 604800000) {
+  var today = new Date().getTime()/1000; // in seconds
+  //If it was taken more than 7 days ago (604800), display PHQ-2
+  if (today - last_timestamp < 604800) {
     // alert("Too long ago");
     x.style.display = "block";
   } else {
