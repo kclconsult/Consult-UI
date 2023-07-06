@@ -186,9 +186,34 @@ var callAPIGetMoodText = (userName)=>{
     if (today -  data[recent_index].time_stamp > 604800) {
       document.getElementById("summary-grid-mood").style.backgroundColor = "#777";
       document.getElementById("tab-summary-mood-date").innerHTML = "Date:" +  " " + data[recent_index].Time + "<br />" + "(more than 7 days ago)";
-    };
+    };   
   })
-  .catch((error) => console.log("error:", error));  
+  .catch((error) => console.log("error:", error));
+
+  // https://qswu939wtb.execute-api.eu-west-2.amazonaws.com/dev for HR data
+  var APIlink = "https://qswu939wtb.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + 0; //Username set to 0 to make all users see the same results
+  // make API call with parameters and use promises to get response
+  fetch(APIlink, requestOptions)
+  .then(response => {return response.json()})
+  .then(data => {
+    document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: " +  data[2] + "<br />" + "Heart rate at rest: " +  data[1];
+    var today = new Date().getTime()/1000; // in seconds
+    const hr_record_date = new Date(data[0]);
+    const hr_timestamp = hr_record_date.getTime()/1000;  // in seconds
+    if (today -  hr_timestamp> 604800) {
+      document.getElementById("summary-grid-hr").style.backgroundColor = "#777";
+      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0] + "<br />" + "(more than 7 days ago)";
+    }
+    else if (data[1] >= 60 && data[1] <= 100 ){
+      document.getElementById("summary-grid-hr").style.backgroundColor = "#71b4e0";
+      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+    }
+    else{
+      document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate at rest
+      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+    }; 
+  })
+  .catch((error) => console.log("error:", error));
 }
 
 
