@@ -265,6 +265,8 @@ var callAPIGetMoodText = (userName)=>{
     }
   })
   .catch((error) => console.log("error:", error));
+// ECG:
+  document.getElementById("summary-grid-ecg").style.backgroundColor = "#71b4e0";
 }
 
 
