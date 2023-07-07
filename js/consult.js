@@ -158,35 +158,43 @@ var callAPIGetMoodText = (userName)=>{
     //alert("Data downloaded.");
     let maxtimestamp = 0;
     let recent_index = 0;
-    for (let i = 0; i < data.length; i++) {
-      if (data[i].time_stamp > maxtimestamp){
-        maxtimestamp = data[i].time_stamp;
-        recent_index = i;
-      };
-    }
-    // Element Id NEED to be changed
-    document.getElementById("tab-summary-mood-text").innerHTML = "Mood:" + " " + data[recent_index].Mood;
-    document.getElementById("tab-summary-mood-date").innerHTML = "Date:" + " " + data[recent_index].Time;
-    // change tab colour and picture based on results
-    var resultText = data[recent_index].Mood;
-    if (resultText === "afraid"||resultText === "sad"||resultText === "tense"||resultText === "frustrated"||resultText === "angry"||resultText === "miserable"||resultText === "gloomy"||resultText === "tired") {
-      document.getElementById("summary-grid-mood").style.backgroundColor = "#ee6863"; 
-      document.getElementById("summary-grid-mood-picture").src= "images/mood-bad.png";
-    }
-    else if (resultText === "excited"||resultText === "delighted"||resultText === "happy"||resultText === "glad"||resultText === "satisfied"||resultText === "calm"||resultText === "sleepy"||resultText === "serene") {
-      document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
-      document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
-    } 
-    else {
-      document.getElementById("summary-grid-mood").style.backgroundColor = "#999";
-      document.getElementById("summary-grid-mood-picture").src= "images/mood-meh.png";
-    };  
-    var today = new Date().getTime()/1000; // in seconds
-    //If it was taken more than 7 days ago (604800), show it in gray
-    if (today -  data[recent_index].time_stamp > 604800) {
-      document.getElementById("summary-grid-mood").style.backgroundColor = "#777";
-      document.getElementById("tab-summary-mood-date").innerHTML = "Date:" +  " " + data[recent_index].Time + "<br />" + "(more than 7 days ago)";
-    };   
+      if (data.length > 0){
+        for (let i = 0; i < data.length; i++) {
+          if (data[i].time_stamp > maxtimestamp){
+            maxtimestamp = data[i].time_stamp;
+            recent_index = i;
+          };
+        }
+        // Element Id NEED to be changed
+        document.getElementById("tab-summary-mood-text").innerHTML = "Mood:" + " " + data[recent_index].Mood;
+        document.getElementById("tab-summary-mood-date").innerHTML = "Date:" + " " + data[recent_index].Time;
+        // change tab colour and picture based on results
+        var resultText = data[recent_index].Mood;
+        if (resultText === "afraid"||resultText === "sad"||resultText === "tense"||resultText === "frustrated"||resultText === "angry"||resultText === "miserable"||resultText === "gloomy"||resultText === "tired") {
+          document.getElementById("summary-grid-mood").style.backgroundColor = "#ee6863"; 
+          document.getElementById("summary-grid-mood-picture").src= "images/mood-bad.png";
+        }
+        else if (resultText === "excited"||resultText === "delighted"||resultText === "happy"||resultText === "glad"||resultText === "satisfied"||resultText === "calm"||resultText === "sleepy"||resultText === "serene") {
+          document.getElementById("summary-grid-mood").style.backgroundColor = "#71b4e0"; 
+          document.getElementById("summary-grid-mood-picture").src= "images/mood-good.png";
+        } 
+        else {
+          document.getElementById("summary-grid-mood").style.backgroundColor = "#999";
+          document.getElementById("summary-grid-mood-picture").src= "images/mood-meh.png";
+        };  
+        var today = new Date().getTime()/1000; // in seconds
+        //If it was taken more than 7 days ago (604800), show it in gray
+        if (today -  data[recent_index].time_stamp > 604800) {
+          document.getElementById("summary-grid-mood").style.backgroundColor = "#777";
+          document.getElementById("tab-summary-mood-date").innerHTML = "Date:" +  " " + data[recent_index].Time + "<br />" + "(more than 7 days ago)";
+        };
+      }
+      else {
+        document.getElementById("summary-grid-mood").style.backgroundColor = "#999";
+        document.getElementById("summary-grid-mood-picture").src= "images/mood-meh.png";
+        document.getElementById("tab-summary-mood-text").innerHTML = "Mood: -";
+        document.getElementById("tab-summary-mood-date").innerHTML = "Date: -";          
+      }
   })
   .catch((error) => console.log("error:", error));
 
@@ -196,22 +204,29 @@ var callAPIGetMoodText = (userName)=>{
   fetch(APIlink, requestOptions)
   .then(response => {return response.json()})
   .then(data => {
-    document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: " +  data[2] + "<br />" + "Heart rate (resting): " +  data[1];
-    var today = new Date().getTime()/1000; // in seconds
-    const hr_record_date = new Date(data[0]);
-    const hr_timestamp = hr_record_date.getTime()/1000;  // in seconds
-    if (today -  hr_timestamp> 604800) {
-      document.getElementById("summary-grid-hr").style.backgroundColor = "#777";
-      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0] + "<br />" + "(more than 7 days ago)";
+    if (data.length > 0) {
+        document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: " +  data[2] + "<br />" + "Heart rate (resting): " +  data[1];
+        var today = new Date().getTime()/1000; // in seconds
+        const hr_record_date = new Date(data[0]);
+        const hr_timestamp = hr_record_date.getTime()/1000;  // in seconds
+        if (today -  hr_timestamp> 604800) {
+          document.getElementById("summary-grid-hr").style.backgroundColor = "#777";
+          document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0] + "<br />" + "(more than 7 days ago)";
+        }
+        else if (data[1] >= 60 && data[1] <= 100 ){
+          document.getElementById("summary-grid-hr").style.backgroundColor = "#71b4e0";
+          document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+        }
+        else{
+          document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate (resting)
+          document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+        };
     }
-    else if (data[1] >= 60 && data[1] <= 100 ){
-      document.getElementById("summary-grid-hr").style.backgroundColor = "#71b4e0";
-      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+    else {
+        document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: -" + "<br />" + "Heart rate (resting): -";
+        document.getElementById("summary-grid-hr").style.backgroundColor = "#777";
+        document.getElementById("summary-grid-hr-date").innerHTML = "Date: -";
     }
-    else{
-      document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate (resting)
-      document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
-    }; 
   })
   .catch((error) => console.log("error:", error));
 }
@@ -470,7 +485,7 @@ const checkPhqDate = async (userName) => {
   return moodPhqDataJson;
  }
 
- const callPHQ = async (userName) => {
+const callPHQ = async (userName) => {
   document.getElementById("phq9-form").style.display = "none"
   document.getElementById("mood-grid").style.display = "none"
   document.getElementById("phq2-form").style.display = "none"
@@ -480,27 +495,32 @@ const checkPhqDate = async (userName) => {
   }
   let data = await checkPhqDate(userName);
   var last_timestamp = 0;
-  for (let i = 0; i < data.length; i++) {
-    if (data[i].time_stamp > last_timestamp){
-      last_timestamp = data[i].time_stamp;
-    };
-  }
-  // console.log(maxtimestamp);
-  // alert(maxtimestamp);
-  if (last_timestamp === 0){
-    last_timestamp = new Date().getTime();
-  }
-  // console.log(last_timestamp);
-  // alert(new Date().getTime());
-  var x = document.getElementById("phq2-form");
-  var today = new Date().getTime()/1000; // in seconds
-  //If it was taken more than 7 days ago (604800), display PHQ-2
-  if (today - last_timestamp > 604800) {
-    x.style.display = "block";
-  } else {
-    x.style.display = "none";
-    document.getElementById("mood-grid").style.display = "block"
-  }
+  if (data.length > 0) {
+      for (let i = 0; i < data.length; i++) {
+        if (data[i].time_stamp > last_timestamp){
+          last_timestamp = data[i].time_stamp;
+        };
+      }
+      // console.log(maxtimestamp);
+      // alert(maxtimestamp);
+      if (last_timestamp === 0){
+        last_timestamp = new Date().getTime();
+      }
+      // console.log(last_timestamp);
+      // alert(new Date().getTime());
+      var x = document.getElementById("phq2-form");
+      var today = new Date().getTime()/1000; // in seconds
+      //If it was taken more than 7 days ago (604800), display PHQ-2
+      if (today - last_timestamp > 604800) {
+        x.style.display = "block";
+      } else {
+        x.style.display = "none";
+        document.getElementById("mood-grid").style.display = "block"
+      }
+    }
+    else {
+        document.getElementById("phq2-form").style.display = "block";
+    }
   }
 
 
