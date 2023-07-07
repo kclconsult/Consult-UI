@@ -133,7 +133,7 @@ var callAPIGetFeedbackText = (userName)=>{
 }
 
 
-// Summary Tab -- get latest mood (and the date) from database 
+// Summary Tab -- get latest mood (and the date)/HR/BP from database 
 var callAPIGetMoodText = (userName)=>{
   userName = getUsername();
   if (userName.length==0){
@@ -216,16 +216,52 @@ var callAPIGetMoodText = (userName)=>{
         else if (data[1] >= 60 && data[1] <= 100 ){
           document.getElementById("summary-grid-hr").style.backgroundColor = "#71b4e0";
           document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+          document.getElementById("tabHR-summary").innerHTML = "Summary info: Good.";
         }
         else{
           document.getElementById("summary-grid-hr").style.backgroundColor = "#ee6863"; // Red for warning abnormal heart rate (resting)
           document.getElementById("summary-grid-hr-date").innerHTML = "Date: " +  data[0];
+          document.getElementById("tabHR-summary").innerHTML = "Summary info: Abnormal data detected.";
         };
     }
     else {
         document.getElementById("summary-grid-hr-text").innerHTML = "Heart rate: -" + "<br />" + "Heart rate (resting): -";
         document.getElementById("summary-grid-hr").style.backgroundColor = "#777";
         document.getElementById("summary-grid-hr-date").innerHTML = "Date: -";
+    }
+  })
+  .catch((error) => console.log("error:", error));
+
+  // https://4dqbgqz6j8.execute-api.eu-west-2.amazonaws.com/dev
+  var APIlink = "https://4dqbgqz6j8.execute-api.eu-west-2.amazonaws.com/dev"+"?userName=" + 0; //Username set to 0 to make all users see the same results
+  // make API call with parameters and use promises to get response
+  fetch(APIlink, requestOptions)
+  .then(response => {return response.json()})
+  .then(data => {
+    if (data.length > 0) {
+        document.getElementById("summary-grid-bp-text").innerHTML = "SBP/DBP:"  +  data[1] + "/" +   data[2];
+        var today = new Date().getTime()/1000; // in seconds
+        const hr_record_date = new Date(data[0]);
+        const hr_timestamp = hr_record_date.getTime()/1000;  // in seconds
+        if (today -  hr_timestamp> 604800) {
+          document.getElementById("summary-grid-bp").style.backgroundColor = "#777";
+          document.getElementById("summary-grid-bp-date").innerHTML = "Date: " +  data[0] + "<br />" + "(more than 7 days ago)";
+        }
+        else if (data[1] >= 90 && data[1] <= 120 && data[2] >= 60 && data[2] <= 80){
+          document.getElementById("summary-grid-bp").style.backgroundColor = "#71b4e0";
+          document.getElementById("summary-grid-bp-date").innerHTML = "Date: " +  data[0];
+          document.getElementById("tabBP-summary").innerHTML = "Summary info: Good.";
+        }
+        else{
+          document.getElementById("summary-grid-bp").style.backgroundColor = "#ee6863"; // Red for warning abnormal BP
+          document.getElementById("summary-grid-bp-date").innerHTML = "Date: " +  data[0];
+          document.getElementById("tabBP-summary").innerHTML = "Summary info: Abnormal data detected.";
+        };
+    }
+    else {
+        document.getElementById("summary-grid-bp-text").innerHTML = "SBP/DBP: -/-" ;
+        document.getElementById("summary-grid-bp").style.backgroundColor = "#777";
+        document.getElementById("summary-grid-bp-date").innerHTML = "Date: -";
     }
   })
   .catch((error) => console.log("error:", error));
