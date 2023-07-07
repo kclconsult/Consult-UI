@@ -56,13 +56,11 @@
       <div class="tabs-content w-tab-content">
         <div id="tab-summary" data-w-tab="tabSummary" class="w-tab-pane w--tab-active">
           <div class="container">
-            <div id="w-node-_8232800f-8092-b2c5-1577-5e9e6e063a87-ea4d4c29" class="w-layout-grid summary-grid">
+            <div id="summary-grid-bp" id="w-node-_8232800f-8092-b2c5-1577-5e9e6e063a87-ea4d4c29" class="w-layout-grid summary-grid">
               <div id="w-node-cea43a19-7df9-9438-e9d8-9ed062c5b605-ea4d4c29" class="div-block-5">
-                <h3 id="w-node-_73ec2cbe-c18c-0b65-701e-32400631f23b-ea4d4c29" class="heading">Blood Pressure: </h3>
-                <div class="text-block-2"> 
-                  <embed type="text/html" src="https://matplotnumpybucket.s3.eu-west-2.amazonaws.com/latest_SBP_value" width="40" height="25">/<embed type="text/html" src="https://matplotnumpybucket.s3.eu-west-2.amazonaws.com/latest_DBP_value" width="40" height="25"><br>
-                </div>
-                <div id="w-node-_2410e4db-91cc-6307-0189-04323420efe1-ea4d4c29" class="text-block-9">Date: </div>
+                <h3 id="w-node-_73ec2cbe-c18c-0b65-701e-32400631f23b-ea4d4c29" class="heading">Blood Pressure</h3>
+                <div id="summary-grid-bp-text" class="text-block-2">Blood Pressure number<br></div>
+                <div id="summary-grid-bp-date" class="text-block-9">Date:<br>Source: </div>
               </div><img id="w-node-_64c11124-9de9-2873-9ed2-02a70367141c-ea4d4c29" loading="lazy" src="images/bloodpressure.png" alt="">
             </div>
             <div id="summary-grid-hr" class="w-layout-grid summary-grid">
@@ -90,7 +88,7 @@
         </div>
         <div id="tab-bp" data-w-tab="tabBP" class="w-tab-pane">
           <div>
-            <h4 class="heading-2">Summary info: Good or bad</h4>
+            <h4 id="tabBP-summary" class="heading-2">Summary info: Good or bad</h4>
             <div data-current="Last 4 hours" data-easing="ease" data-duration-in="300" data-duration-out="100" class="w-tabs">
               <div class="tabs-menu-2 w-tab-menu">
                 <a data-w-tab="Last 4 hours" class="tabbasic graphs w-inline-block w-tab-link w--current">
@@ -123,7 +121,7 @@
         </div>
         <div id="tab-hri" data-w-tab="tabHRI" class="w-tab-pane">
           <div>
-            <h4 class="heading-2">Summary info: Good or bad</h4>
+            <h4 id="tabHR-summary" class="heading-2">Summary info: Good or bad</h4>
             <div data-current="Last 4 hours" data-easing="ease" data-duration-in="300" data-duration-out="100" class="w-tabs">
               <div class="tabs-menu-2 w-tab-menu">
                 <a data-w-tab="Last 4 hours" class="tabbasic graphs w-inline-block w-tab-link w--current">
